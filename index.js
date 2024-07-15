@@ -2,6 +2,7 @@ const BASE_URL = "http://192.168.15.3:8080/api2/json"
 const USERNAME = "root@pam"
 const REALM = "<realm>"
 const TOKEN = "<token>"
+const NODE_NAME = "pve"
 
 function buildAuthHeader() {
     return `PVEAPIToken=${USERNAME}!${REALM}=${TOKEN}`
@@ -24,7 +25,10 @@ async function post(url, body) {
         method: "POST", 
         body,
         mode: "cors",
-        headers: { "Authorization": buildAuthHeader() }
+        headers: {
+            "Authorization": buildAuthHeader(),
+            "Content-Type": "application/x-www-form-urlencoded"
+        }
     })
     .then(async (res) => res.json())
     .catch(console.error)
@@ -40,25 +44,29 @@ async function refresh(ms = 1000) {
 }
 
 async function shutdown() {
-    await post(`/nodes/pve/status/shutdown`)
+    await post(`/nodes/${NODE_NAME}/status`, 'command=shutdown')
+}
+
+async function reboot() {
+    await post(`/nodes/${NODE_NAME}/status`, 'command=reboot')
 }
 
 async function listVMs() {
-    return get("/nodes/pve/qemu")
+    return get(`/nodes/${NODE_NAME}/qemu`)
 }
 
 async function startVm(vmid) {
-    await post(`/nodes/pve/qemu/${vmid}/status/start`)
+    await post(`/nodes/${NODE_NAME}/qemu/${vmid}/status/start`)
     refresh()
 }
 
 async function shutdownVm(vmid) {
-    await post(`/nodes/pve/qemu/${vmid}/status/shutdown`)
+    await post(`/nodes/${NODE_NAME}/qemu/${vmid}/status/shutdown`)
     refresh()
 }
 
 async function stopVm(vmid) {
-    await post(`/nodes/pve/qemu/${vmid}/status/stop`)
+    await post(`/nodes/${NODE_NAME}/qemu/${vmid}/status/stop`)
     refresh()
 }
 
@@ -115,22 +123,8 @@ function renderVMs(vms) {
     })
 }
 
-function renderRefreshButton() {
-    var button = createButton("🔄 refresh", refresh.bind(null, 0))
-    button.classList.add("refresh")
-    document.body.appendChild(button)
-}
-
-function renderShutdownButton() {
-    var button = createButton("🔋 Shutdown Proxmox", shutdown)
-    button.classList.add("shutdown-node")
-    document.body.appendChild(button)
-}
-
 async function main() {
     vms = await listVMs()
-    renderShutdownButton()
-    renderRefreshButton()
     renderVMs(vms.data)
 }
 

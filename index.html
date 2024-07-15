@@ -8,5 +8,31 @@
     <script src="index.js"></script>
 </head>
 <body>
+    <button onclick="refresh()" class="pushable refresh">
+        <span class="shadow"></span>
+        <span class="edge"></span>
+        <span class="front">
+            🔄 Refresh
+        </span>
+    </button>
+
+    <h1>Node pve</h1>
+    <button onclick="shutdown()" class="pushable shutdown-node">
+        <span class="shadow"></span>
+        <span class="edge"></span>
+        <span class="front">
+            🔋 Shutdown
+        </span>
+    </button>
+
+    <button onclick="reboot()" class="pushable reboot-node">
+        <span class="shadow"></span>
+        <span class="edge"></span>
+        <span class="front">
+            🔄 Reboot
+        </span>
+    </button>
+
+    <h1>Virtual machines</h1>
 </body>
 </html>

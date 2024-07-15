@@ -6,8 +6,11 @@ html, body {
   margin: 0;
   padding: 0;
 }
-h2 {
-  margin: 0;
+h1, h2 {
+  margin: .5em 0;
+}
+h1 {
+  margin-top: 1em;
 }
 body {
   background-color: rgb(1,43,53);
@@ -23,7 +26,6 @@ body {
   display: flex;
   flex-direction: column;
   width: 90%;
-  padding-top: 1.5em;
 }
 .pushable {
   user-select: none;
@@ -97,6 +99,15 @@ body {
     hsl(345deg 100% 16%) 100%
   );
 }
+.pushable.reboot-node > .edge {
+  background: linear-gradient(
+    to left,
+    hsl(48deg 100% 16%) 0%,
+    hsl(48deg 100% 32%) 8%,
+    hsl(48deg 100% 32%) 92%,
+    hsl(48deg 100% 16%) 100%
+  );
+}
 .front {
   display: block;
   position: relative;
@@ -126,6 +137,10 @@ body {
 }
 .pushable.start > .front {
   background: hsl(142, 96%, 22%);
+}
+.pushable.reboot-node > .front {
+  background: hsl(48, 100%, 50%);
+  color: black;
 }
 .pushable:hover {
   filter: brightness(110%);
