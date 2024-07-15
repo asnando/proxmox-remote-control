@@ -39,6 +39,10 @@ async function refresh(ms = 1000) {
     location.reload()
 }
 
+async function shutdown() {
+    await post(`/nodes/pve/status/shutdown`)
+}
+
 async function listVMs() {
     return get("/nodes/pve/qemu")
 }
@@ -117,8 +121,15 @@ function renderRefreshButton() {
     document.body.appendChild(button)
 }
 
+function renderShutdownButton() {
+    var button = createButton("🔋 Shutdown Proxmox", shutdown)
+    button.classList.add("shutdown-node")
+    document.body.appendChild(button)
+}
+
 async function main() {
     vms = await listVMs()
+    renderShutdownButton()
     renderRefreshButton()
     renderVMs(vms.data)
 }

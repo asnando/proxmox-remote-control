@@ -87,7 +87,8 @@ body {
     hsl(340deg 100% 16%) 100%
   );
 }
-.pushable.force-stop > .edge {
+.pushable.force-stop > .edge,
+.pushable.shutdown-node > .edge {
   background: linear-gradient(
     to left,
     hsl(345deg 100% 16%) 0%,
@@ -119,7 +120,8 @@ body {
 .pushable.stop > .front {
   background: hsl(345deg 100% 47%);
 }
-.pushable.force-stop > .front {
+.pushable.force-stop > .front,
+.pushable.shutdown-node > .front {
   background: hsl(345, 98%, 29%);
 }
 .pushable.start > .front {
@@ -155,6 +157,9 @@ body {
 }
 
 .pushable.refresh {
-  margin-top: 5em;
   width: 15em;
+}
+
+body > :first-child {
+  margin-top: 5em;
 }
